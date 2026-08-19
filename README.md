@@ -13,13 +13,13 @@ This project was developed as part of a Microservices
  Client
    |
    v
-API Gateway (9095)
+- API Gateway (9095)
    |
    +-------------------+
    |                   |
    v                   v
-ORDER-SERVICE      USER-SERVICE
+- ORDER-SERVICE      USER-SERVICE
    |
    |
    v
-PAYMENT-SERVICE
+- PAYMENT-SERVICE
