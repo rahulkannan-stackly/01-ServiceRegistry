@@ -23,3 +23,12 @@ This project was developed as part of a Microservices
    |
    v
 - PAYMENT-SERVICE
+
+## Circuit Breaker
+Payment Service Down
+        ↓
+Feign Failure
+        ↓
+Circuit Breaker
+        ↓
+Fallback Method
