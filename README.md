@@ -1,4 +1,4 @@
-# One Enterprise Platform - Microservices Learning Project
+# Microservices Learning Project
 ## Overview 
 This project was developed as part of a Microservices
 ### the application consists of:
@@ -29,7 +29,7 @@ This project was developed as part of a Microservices
            ▼
 ┌─────────────────────┐
 │    ORDER SERVICE    │
-│      Port 8082      │
+│      Port 9091      │
 └──────────┬──────────┘
            │
            │ Feign Client
@@ -38,7 +38,7 @@ This project was developed as part of a Microservices
      ▼           ▼
 ┌───────────┐ ┌─────────────┐
 │USERSERVICE│ │PAYMENTSERVICE│
-│ Port 8081 │ │  Port 8083   │
+│ Port 9090 │ │  Port 9092   │
 └───────────┘ └─────────────┘
 ```
 
@@ -58,14 +58,14 @@ This project was developed as part of a Microservices
 
 ┌─────────────┐      ┌─────────────┐      ┌─────────────┐
 │ API GATEWAY │      │ USER SERVICE│      │ORDER SERVICE│
-│    9095     │      │    8081     │      │    8082     │
+│    9095     │      │    9090     │      │    9091     │
 └─────────────┘      └─────────────┘      └──────┬──────┘
                                                   │
                                                   │
                                                   ▼
                                           ┌─────────────┐
                                           │PAYMENT SRVC │
-                                          │    8083     │
+                                          │    9092     │
                                           └─────────────┘
 ```
 
@@ -136,11 +136,3 @@ FALLBACK METHOD
       ▼
 "Payment Service Temporarily Unavailable"
 ```
-## Circuit Breaker
-Payment Service Down
-        ↓
-Feign Failure
-        ↓
-Circuit Breaker
-        ↓
-Fallback Method
