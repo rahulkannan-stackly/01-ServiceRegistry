@@ -8,7 +8,7 @@ This project was developed as part of a Microservices
 - Eureka Service Registry
 - API Gateway
 - Service Discovery
-- Inter-Service Communication using OpenFeign
+- Inter-Service Communication using OpenFeign 
 ## Architecture
 # Microservices Architecture
 
