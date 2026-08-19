@@ -10,14 +10,14 @@ This project was developed as part of a Microservices
 - Service Discovery
 - Inter-Service Communication using OpenFeign
 ## Architecture
- Client
-   |
-   v
+ - Client
+  - |
+  - v
 - API Gateway (9095)
-   |
-   +-------------------+
-   |                   |
-   v                   v
+  - |
+  - +-------------------+
+  - |                   |
+  - v                   v
 - ORDER-SERVICE      USER-SERVICE
    |
    |
