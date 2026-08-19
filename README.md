@@ -10,19 +10,56 @@ This project was developed as part of a Microservices
 - Service Discovery
 - Inter-Service Communication using OpenFeign
 ## Architecture
- - Client
-  - |
-  - v
-- API Gateway (9095)
-  - |
-  - +-------------------+
-  - |                   |
-  - v                   v
-- ORDER-SERVICE      USER-SERVICE
-   |
-   |
-   v
-- PAYMENT-SERVICE
+ ```text
+4
+┌─────────────────────┐
+5
+│ CLIENT │
+6
+│ (Postman / Browser) │
+7
+└──────────┬──────────┘
+8
+│
+9
+│ HTTP Request
+10
+▼
+11
+┌─────────────────────┐
+12
+│ API GATEWAY │
+13
+│ Port 9095 │
+14
+└──────────┬──────────┘
+15
+│
+16
+│ Routes Request
+17
+▼
+18
+┌─────────────────────┐
+19
+│ ORDER SERVICE │
+20
+│ Port 8082 │
+21
+└──────────┬──────────┘
+22
+│
+23
+│ Feign Client
+24
+┌─────┴─────┐
+│ │
+▼ ▼
+┌───────────┐ ┌─────────────┐
+│USERSERVICE│ │PAYMENTSERVICE│
+│ Port 8081 │ │ Port 8083    │
+└───────────┘ └─────────────┘
+```
 
 ## Circuit Breaker
 Payment Service Down
