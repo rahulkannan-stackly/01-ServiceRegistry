@@ -10,40 +10,132 @@ This project was developed as part of a Microservices
 - Service Discovery
 - Inter-Service Communication using OpenFeign
 ## Architecture
- ```text
+# Microservices Architecture
+
+```text
 ┌─────────────────────┐
-│        CLIENT       |
-│                     |
+│       CLIENT        │
+│ (Postman / Browser) │
 └──────────┬──────────┘
            │
-           |
            │ HTTP Request
            ▼
 ┌─────────────────────┐
-│ API GATEWAY         │
-│ Port 9095           │
+│     API GATEWAY     │
+│      Port 9095      │
 └──────────┬──────────┘
-           │ 
-           │ Routes Request 
+           │
+           │ Routes Request
            ▼
 ┌─────────────────────┐
-│ ORDER SERVICE       │
-│ Port 8082           │
+│    ORDER SERVICE    │
+│      Port 8082      │
 └──────────┬──────────┘
-22
-│
-23
-│ Feign Client
-24
-┌─────┴─────┐
-│ │
-▼ ▼
+           │
+           │ Feign Client
+     ┌─────┴─────┐
+     │           │
+     ▼           ▼
 ┌───────────┐ ┌─────────────┐
 │USERSERVICE│ │PAYMENTSERVICE│
-│ Port 8081 │ │ Port 8083    │
+│ Port 8081 │ │  Port 8083   │
 └───────────┘ └─────────────┘
 ```
 
+---
+
+# Service Discovery Architecture
+
+```text
+                    ┌──────────────────┐
+                    │  EUREKA SERVER   │
+                    │    Port 8761     │
+                    └────────┬─────────┘
+                             │
+      ┌──────────────────────┼──────────────────────┐
+      │                      │                      │
+      ▼                      ▼                      ▼
+
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│ API GATEWAY │      │ USER SERVICE│      │ORDER SERVICE│
+│    9095     │      │    8081     │      │    8082     │
+└─────────────┘      └─────────────┘      └──────┬──────┘
+                                                  │
+                                                  │
+                                                  ▼
+                                          ┌─────────────┐
+                                          │PAYMENT SRVC │
+                                          │    8083     │
+                                          └─────────────┘
+```
+
+---
+
+# Order Creation Flow
+
+```text
+POST /api/orders
+        │
+        ▼
+┌──────────────────┐
+│   API GATEWAY    │
+│      9095        │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  ORDER SERVICE   │
+└────────┬─────────┘
+         │
+         ├──────────────► USER SERVICE
+         │               (Feign Client)
+         │
+         └──────────────► PAYMENT SERVICE
+                         (Feign Client)
+
+         │
+         ▼
+ OrderResponseDto
+```
+
+---
+
+# Circuit Breaker Flow
+
+```text
+               NORMAL FLOW
+
+ORDER SERVICE
+      │
+      ▼
+PAYMENT SERVICE
+      │
+      ▼
+ SUCCESS RESPONSE
+
+
+------------------------------------------------
+
+
+         PAYMENT SERVICE DOWN
+
+ORDER SERVICE
+      │
+      ▼
+PAYMENT SERVICE
+      │
+      ▼
+   FAILED
+      │
+      ▼
+CIRCUIT BREAKER
+      │
+      ▼
+FALLBACK METHOD
+      │
+      ▼
+"Payment Service Temporarily Unavailable"
+```
 ## Circuit Breaker
 Payment Service Down
         ↓
